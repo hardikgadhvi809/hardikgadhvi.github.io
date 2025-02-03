@@ -1,89 +1,56 @@
 <!doctype html>
-<html lang="en"> 
- <head><style type="text/css" id="dcoder_stylesheet">/* styles.css */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
-
-header {
-    background-color: #4CAF50;
-    padding: 20px;
-    color: white;
-    text-align: center;
-}
-
-.notice {
-    padding: 10px;
-    text-align: center;
-}
-
-#formSection {
-    padding: 20px;
-    text-align: center;
-}
-
-input {
-    padding: 10px;
-    margin: 10px 0;
-    width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    background-color: #008CBA;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #005f73;
-}</style></head> 
+<html lang="en">
+ <head></head> 
  <body> 
-  <h1> Hello </h1> 
+  <h1>  </h1> 
   <div>
-    This is a html example from Dcoder, 
-   <br> have fun. :) 
+    
+   <br> 
   </div> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>DKV Arts and Science College Jamnger</title> 
-  <link rel="stylesheet" href="styles.css"> 
-  <header> 
-   <h1>DKV Arts and Science College Jamnger</h1> 
-  </header> 
-  <section class="notice"> 
-   <p style="color: red; font-size: 20px;">All the boys will have to fill in their name and roll number and submit it.</p> 
-  </section> 
-  <section id="formSection"> 
-   <form id="responseForm"> <label for="name">Name:</label> 
-    <input type="text" id="name" name="name" required>
-    <br>
-    <br> <label for="rollNumber">Roll Number:</label> 
-    <input type="text" id="rollNumber" name="rollNumber" required>
-    <br>
-    <br> <label for="subject">Subject:</label> 
-    <input type="text" id="subject" name="subject" required>
-    <br>
-    <br> <button type="submit">Submit</button> 
-   </form> 
-  </section> 
-  <div id="notification" style="display:none; text-align: center; color: green; font-size: 18px; padding: 10px;">
-    Thank you for your response 
-  </div> 
-  <script src="script.js"></script> 
  
-<script type="text/javascript" id="dcoder_script">// script.js
-document.getElementById('responseForm').addEventListener('submit', function(event) {
-    event.preventDefault();  // To prevent form from refreshing the page
 
-    // Hide the form and show the thank you message
-    document.getElementById('formSection').style.display = 'none';
-    document.getElementById('notification').style.display = 'block';
-});</script></body></html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Data Form</title>
+
+
+    <h2>Enter Your Details</h2>
+    <form id="dataForm">
+        <input type="text" id="name" placeholder="Enter Name" required>
+        <input type="email" id="email" placeholder="Enter Email" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+
+        const firebaseConfig = {
+            databaseURL: "https://index-d7aeb-default-rtdb.firebaseio.com/"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        document.getElementById("dataForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+
+            const newUserRef = push(ref(database, 'users/'));
+            set(newUserRef, {
+                name: name,
+                email: email
+            }).then(() => {
+                alert("Data Submitted Successfully!");
+                document.getElementById("dataForm").reset();
+            }).catch((error) => {
+                alert("Error: " + error.message);
+            });
+        });
+    </script>
+
+</body></html>
+
+
